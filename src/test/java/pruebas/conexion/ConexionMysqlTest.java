@@ -8,6 +8,8 @@ package pruebas.conexion;
 
 import org.junit.Test;
 import conexion.ConexionMysql;
+import conexion.Conexion;
+import java.sql.SQLException;
 import static org.junit.Assert.*;
 
 /**
@@ -25,7 +27,10 @@ public class ConexionMysqlTest {
     // @Test
     // public void hello() {}
     
-    public void conexionExitosa(){
-        
+    @Test
+    public void conexionExitosa() throws SQLException {
+        ConexionMysql.setData("root", "localhost", "viajes", "chocolate4194");
+        Conexion con = ConexionMysql.getInstance();
+        con.close();
     }
 }
