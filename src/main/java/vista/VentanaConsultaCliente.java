@@ -5,17 +5,20 @@
  */
 package vista;
 
+import conexion.BO;
 /**
  *
  * @author jesus
  */
 public class VentanaConsultaCliente extends javax.swing.JFrame {
 
+    private BO bo;
     /**
      * Creates new form VentanaConsultaCliente
      */
     public VentanaConsultaCliente() {
         initComponents();
+        bo = new BO();
     }
 
     /**
@@ -47,7 +50,7 @@ public class VentanaConsultaCliente extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
 
-        jLabel4.setText("jLabel4");
+        jLabel4.setText("Apellido");
 
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
 
@@ -56,22 +59,15 @@ public class VentanaConsultaCliente extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Telefonos"
+                "Telefono"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
-                false
-            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(jTable1);
