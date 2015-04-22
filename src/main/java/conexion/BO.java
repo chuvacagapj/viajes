@@ -31,11 +31,6 @@ public class BO {
      que exita en el paquete dao
      */
 
-    // servicios 
-    private boolean validacion() {
-        return this.tipo == TipoConexion.MySQL;
-    }
-
     // funciones create
     public void createCliente(Cliente cliente) {
         if (cliente.getApellidos() == null) {
@@ -44,11 +39,7 @@ public class BO {
             JOptionPane.showMessageDialog(null, "¡Es obligatorio llenar el nombre!", "¡¡Error en la Captura!!", JOptionPane.ERROR_MESSAGE);
         } else {
             try {
-                if (validacion()) {
-                    this.cliente.insertAutoIncrement(cliente);
-                } else {
-                    this.cliente.insert(cliente);
-                }
+                this.cliente.insert(cliente);
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ex, "¡¡Error en la Base de datos!!", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {

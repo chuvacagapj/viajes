@@ -85,7 +85,7 @@ public class ClienteDAO {
         PreparedStatement sentencia;
         PreparedStatement pClave;
         ResultSet clave;
-        String query = "SELECT MAX(clienteId) + 1 FROM clientes;";
+        String query = "SELECT MAX(clienteId) + 1 FROM cliente";
         
         pClave = conexion.sentencia(query);
         clave = pClave.executeQuery();
@@ -103,23 +103,6 @@ public class ClienteDAO {
         sentencia.close();
         pClave.close();
     }
-    /**
-     * Se encarga de guardar los objetos clientes en su correspondiente tabla en la base de datos
-     * @param cliente
-     * @throws SQLException 
-     */
-    public void insertAutoIncrement(Cliente cliente)throws SQLException{
-        PreparedStatement sentencia;
-        ResultSet clave;
-        String query = "INSERT INTO cliente(nombre, apellido) VALUES(?,?);";
-        sentencia = conexion.sentenciaEspecial(query, PreparedStatement.RETURN_GENERATED_KEYS);
-        sentencia.setNString(1, cliente.getNombres  ());
-        sentencia.setNString(2, cliente.getApellidos());
-        sentencia.executeUpdate();
-        clave = sentencia.getGeneratedKeys();
-        clave.first();
-        cliente.setClienteId(clave.getInt(1));
-    }
     
     public void update (Cliente cliente) throws SQLException{
         PreparedStatement sentencia;
@@ -133,9 +116,8 @@ public class ClienteDAO {
     
     public void delete (Cliente cliente) throws SQLException{
         PreparedStatement sentencia;
-        String query = "DELETE cliente WHERE clienteId = ?";
+        String query = String.format("DELETE FROM cliente WHERE clienteId = %s", cliente.getClienteId().toString());
         sentencia = conexion.sentencia(query);
-        sentencia.setInt(1, cliente.getClienteId());
         sentencia.executeUpdate();
     }
 }

@@ -9,8 +9,13 @@ package pruebas.conexion;
 import org.junit.Test;
 import conexion.ConexionMysql;
 import conexion.Conexion;
+import dao.*;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import org.junit.After;
+import vo.*;
 import static org.junit.Assert.*;
+import org.junit.Before;
 
 /**
  *
@@ -18,19 +23,54 @@ import static org.junit.Assert.*;
  */
 public class ConexionMysqlTest {
     
-    public ConexionMysqlTest() {
-    }
+    private Conexion conexion;
+    private Cliente cliente;
+    private ClienteDAO clienteDao;
+    
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    public ConexionMysqlTest() throws SQLException{
+
+    }
     
     @Test
-    public void conexionExitosa() throws SQLException {
+    public void InsertarCliente() throws SQLException{
+        assertNotNull(this.conexion);
+        this.cliente = new Cliente();
+        this.clienteDao = new ClienteDAO(this.conexion);
+        this.cliente.setNombres("Jesus Jose");
+        this.cliente.setApellidos("Garcia Pardo");
+        this.clienteDao.insert(this.cliente);
+        
+        assertNotNull(this.cliente.getClienteId());
+    }
+    
+    @Test
+    public void buscarCliente(){
+        
+    }
+    
+    @Test
+    public void actualizarCliente(){
+    }
+    
+    @Test
+    public void eliminarCliente()throws SQLException{
+        this.clienteDao = new ClienteDAO(this.conexion);
+        this.cliente = new Cliente();
+        this.cliente.setClienteId(0);
+        this.clienteDao.delete(cliente);
+        
+    }
+    
+    @Before
+    public void abrirConexion()throws SQLException{
         ConexionMysql.setData("root", "localhost", "viajes", "chocolate4194");
-        Conexion con = ConexionMysql.getInstance();
-        con.close();
+        this.conexion = ConexionMysql.getInstance();
+    }
+    
+    @After
+    public void cerrarConexion()throws SQLException{
+        this.conexion.close();
+        ConexionMysql.CloseConexion();
     }
 }
