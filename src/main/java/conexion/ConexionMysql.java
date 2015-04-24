@@ -33,6 +33,7 @@ public class ConexionMysql implements Conexion{
         password = pw;
     }
     
+    
     public static ConexionMysql getInstance(){
         if(mysql == null){
             mysql = new ConexionMysql(database, host, userName, password);

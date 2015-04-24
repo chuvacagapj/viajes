@@ -10,8 +10,8 @@ import org.junit.Test;
 import conexion.ConexionMysql;
 import conexion.Conexion;
 import dao.*;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import org.junit.After;
 import vo.*;
 import static org.junit.Assert.*;
@@ -35,8 +35,6 @@ public class ConexionMysqlTest {
     @Test
     public void InsertarCliente() throws SQLException{
         assertNotNull(this.conexion);
-        this.cliente = new Cliente();
-        this.clienteDao = new ClienteDAO(this.conexion);
         this.cliente.setNombres("Jesus Jose");
         this.cliente.setApellidos("Garcia Pardo");
         this.clienteDao.insert(this.cliente);
@@ -45,18 +43,23 @@ public class ConexionMysqlTest {
     }
     
     @Test
-    public void buscarCliente(){
-        
+    public void buscarCliente()throws SQLException{
+        ArrayList <Cliente> lista = this.clienteDao.select(this.cliente);
+        for (Cliente lista1 : lista) {
+            System.out.println(String.format("Nombres: %s, Apellidos: %s", lista1.getNombres(), lista1.getApellidos()));
+        }
     }
     
     @Test
-    public void actualizarCliente(){
+    public void actualizarCliente()throws SQLException{
+        this.cliente.setClienteId(1);
+        System.out.println(this.cliente = this.clienteDao.select(this.cliente).get(0));
+        this.cliente.setNombres("Adrian Ernesto");
+        this.clienteDao.update(cliente);
     }
     
     @Test
     public void eliminarCliente()throws SQLException{
-        this.clienteDao = new ClienteDAO(this.conexion);
-        this.cliente = new Cliente();
         this.cliente.setClienteId(0);
         this.clienteDao.delete(cliente);
         
@@ -66,6 +69,8 @@ public class ConexionMysqlTest {
     public void abrirConexion()throws SQLException{
         ConexionMysql.setData("root", "localhost", "viajes", "chocolate4194");
         this.conexion = ConexionMysql.getInstance();
+        this.cliente = new Cliente();
+        this.clienteDao = new ClienteDAO(this.conexion);
     }
     
     @After

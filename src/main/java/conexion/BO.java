@@ -25,11 +25,28 @@ import javax.swing.JOptionPane;
 public class BO {
     
     private Conexion conexion;
-    private TipoConexion tipo;
     private ClienteDAO cliente;
     /* TODO faltan los atributos, debe haber un atributo por cada objeto DAO
      que exita en el paquete dao
      */
+
+    public Conexion getConexion() {
+        return conexion;
+    }
+
+    public void setConexion(Conexion conexion) {
+        this.conexion = conexion;
+    }
+
+    public ClienteDAO getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteDAO cliente) {
+        this.cliente = cliente;
+    }
+    
+    
 
     // funciones create
     public void createCliente(Cliente cliente) {
@@ -83,7 +100,10 @@ public class BO {
             lista = this.cliente.select(cliente);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex, "¡¡Error en la Base de datos!!", JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
+        }catch (NullPointerException ex) {
+            throw ex;
+        }
+        catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex, "¡¡Error inusual!!", JOptionPane.ERROR_MESSAGE);
         }
         return lista;

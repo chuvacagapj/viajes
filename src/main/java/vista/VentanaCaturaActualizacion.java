@@ -5,17 +5,55 @@
  */
 package vista;
 
+import javax.swing.JFrame;
+import vo.Cliente;
+import conexion.BO;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author jesus
  */
 public class VentanaCaturaActualizacion extends javax.swing.JFrame {
 
+    private VentanaConsultaCliente ventanaAnterior;
+    private BO bo;
+    private Cliente cliente;
+
     /**
      * Creates new form VentanaCaturaActualizacion
      */
     public VentanaCaturaActualizacion() {
         initComponents();
+    }
+
+    public void setVentanaAnterior(VentanaConsultaCliente v) {
+        this.ventanaAnterior = v;
+    }
+
+    public VentanaConsultaCliente getVentanaAnterior() {
+        return ventanaAnterior;
+    }
+
+    public BO getBo() {
+        return bo;
+    }
+
+    public void setBo(BO bo) {
+        this.bo = bo;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+        if (cliente != null) {
+            this.jLabel2.setText(cliente.getClienteId().toString());
+            this.jTextField1.setText(cliente.getNombres());
+            this.jTextField2.setText(cliente.getApellidos());
+        }
     }
 
     /**
@@ -46,8 +84,23 @@ public class VentanaCaturaActualizacion extends javax.swing.JFrame {
         jLabel4.setText("Apellido:");
 
         jButton1.setText("Aceptar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancelar");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,6 +150,48 @@ public class VentanaCaturaActualizacion extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.cliente = null;
+        this.jTextField1.setText("");
+        this.jTextField2.setText("");
+        this.jLabel2.setText("");
+        this.ventanaAnterior.actualizar();
+        this.setVisible(false);
+        this.ventanaAnterior.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (this.jTextField1.getText() == "" || this.jTextField2.getText() == "") {
+            JOptionPane.showMessageDialog(this, "¡Es obligatorio llenar Todos los campos!", "¡¡Error en la Captura!!", JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (this.cliente == null) {
+                this.cliente = new Cliente();
+                this.cliente.setApellidos(this.jTextField2.getText());
+                this.cliente.setNombres(this.jTextField1.getText());
+                this.bo.createCliente(cliente);
+                JOptionPane.showMessageDialog(
+                        this, String.format("La clave del cliente es el %s",
+                                this.cliente.getClienteId().toString()),
+                        "¡¡Captura Exitosa!!", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                this.cliente.setApellidos(this.jTextField2.getText());
+                this.cliente.setNombres(this.jTextField1.getText());
+                this.bo.updateCliente(cliente);
+            }
+            this.cliente = null;
+            this.jTextField1.setText("");
+            this.jTextField2.setText("");
+            this.jLabel2.setText("");
+            this.ventanaAnterior.actualizar();
+            this.setVisible(false);
+            this.ventanaAnterior.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
