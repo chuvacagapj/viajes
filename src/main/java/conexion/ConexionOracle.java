@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cordinadores;
-
-import conexion.TipoConexion;
+package conexion;
 
 /**
  *
  * @author jesus
  */
-public class constructorDAO {
-    public static void main(String[] args) {
-        System.out.println(TipoConexion.MySQL.ordinal());
-    }
+public class ConexionOracle {
+    
 }

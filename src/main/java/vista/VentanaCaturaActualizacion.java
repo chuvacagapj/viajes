@@ -166,14 +166,17 @@ public class VentanaCaturaActualizacion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (this.jTextField1.getText() == "" || this.jTextField2.getText() == "") {
+        boolean bandera;
+        if (this.jTextField1.getText() == "" || this.jTextField2.getText() == ""
+                ||this.jTextField1.getText().trim().isEmpty()
+                ||this.jTextField2.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "¡Es obligatorio llenar Todos los campos!", "¡¡Error en la Captura!!", JOptionPane.ERROR_MESSAGE);
         } else {
             if (this.cliente == null) {
                 this.cliente = new Cliente();
                 this.cliente.setApellidos(this.jTextField2.getText());
                 this.cliente.setNombres(this.jTextField1.getText());
-                this.bo.createCliente(cliente);
+                bandera = this.bo.createCliente(cliente);
                 JOptionPane.showMessageDialog(
                         this, String.format("La clave del cliente es el %s",
                                 this.cliente.getClienteId().toString()),
@@ -181,15 +184,18 @@ public class VentanaCaturaActualizacion extends javax.swing.JFrame {
             } else {
                 this.cliente.setApellidos(this.jTextField2.getText());
                 this.cliente.setNombres(this.jTextField1.getText());
-                this.bo.updateCliente(cliente);
+                bandera = this.bo.updateCliente(cliente);
             }
-            this.cliente = null;
-            this.jTextField1.setText("");
-            this.jTextField2.setText("");
-            this.jLabel2.setText("");
-            this.ventanaAnterior.actualizar();
-            this.setVisible(false);
-            this.ventanaAnterior.setVisible(true);
+
+            if (bandera) {
+                this.cliente = null;
+                this.jTextField1.setText("");
+                this.jTextField2.setText("");
+                this.jLabel2.setText("");
+                this.ventanaAnterior.actualizar();
+                this.setVisible(false);
+                this.ventanaAnterior.setVisible(true);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

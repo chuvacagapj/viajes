@@ -31,7 +31,12 @@ public class Cliente {
     }
 
     public void setNombres(String nombres) {
-        this.nombres = nombres;
+        String pb = nombres.trim();
+        if (pb.isEmpty()) {
+            this.nombres = null;
+        }else{
+            this.nombres = nombres;
+        }
     }
 
     public String getApellidos() {
@@ -39,7 +44,12 @@ public class Cliente {
     }
 
     public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+        String pb = apellidos.trim();
+        if (pb.isEmpty()) {
+            this.apellidos = null;
+        }else{
+            this.apellidos = apellidos;
+        }
     }
 
     public String[] getTelefono() {

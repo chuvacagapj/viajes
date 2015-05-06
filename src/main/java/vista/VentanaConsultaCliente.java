@@ -186,9 +186,13 @@ public class VentanaConsultaCliente extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         int i = this.jComboBox1.getSelectedIndex();
+        System.out.println(i);
         if(i >= 0){
             this.jLabel3.setText(this.lista.get(i).getNombres());
             this.jLabel5.setText(this.lista.get(i).getApellidos());
+        }else{
+            this.jLabel3.setText(null);
+            this.jLabel5.setText(null);
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 

@@ -49,20 +49,25 @@ public class BO {
     
 
     // funciones create
-    public void createCliente(Cliente cliente) {
+    public boolean createCliente(Cliente cliente) {
         if (cliente.getApellidos() == null) {
             JOptionPane.showMessageDialog(null, "¡Es obligatorio llenar el apellido!", "¡¡Error en la Captura!!", JOptionPane.ERROR_MESSAGE);
+            return false;
         } else if (cliente.getNombres() == null) {
             JOptionPane.showMessageDialog(null, "¡Es obligatorio llenar el nombre!", "¡¡Error en la Captura!!", JOptionPane.ERROR_MESSAGE);
+            return false;
         } else {
             try {
                 this.cliente.insert(cliente);
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, ex, "¡¡Error en la Base de datos!!", JOptionPane.ERROR_MESSAGE);
+                return false;
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex, "¡¡Error inusual!!", JOptionPane.ERROR_MESSAGE);
+                return false;
             }
         }
+        return true;
     }
     
     public void createCorrida(Corrida corrida) {
@@ -145,14 +150,17 @@ public class BO {
     }
 
     // funciones update
-    public void updateCliente(Cliente cliente) {
+    public boolean updateCliente(Cliente cliente) {
         try {
             this.cliente.update(cliente);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex, "¡¡Error en la Base de datos!!", JOptionPane.ERROR_MESSAGE);
+            return false;
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex, "¡¡Error inusual!!", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
+        return true;
     }
     
     public void updateCorrida(Corrida corrida) {

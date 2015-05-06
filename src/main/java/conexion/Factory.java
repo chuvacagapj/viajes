@@ -10,5 +10,14 @@ package conexion;
  * @author jesus
  */
 public class Factory {
-    //TODO todo el desarrollo de factory
+    public Conexion obtenerConexion(TipoConexion tipo){
+        switch (tipo) {
+            case MySQL:
+                return ConexionMysql.getInstance();
+            case Oracle:
+                return null;
+            default:
+                throw new AssertionError();
+        }
+    }
 }
